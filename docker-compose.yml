@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  # for local development
+  frontend:
+    build:
+      context: ./expense-tracker-frontend
+      target: 'develop-stage'
+    ports:
+      - '8080:8080'
+    volumes:
+      - './expense-tracker-frontend:/app'
+    command: ["yarn", "serve"]
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sensors
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+    ports:
+      - 3306:3306

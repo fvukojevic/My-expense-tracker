@@ -1,0 +1,24 @@
+.DS_Store
+expense-tracker-frontend/node_modules
+expense-tracker-frontend/.idea
+RestMyExpenseTracker/.idea
+RestMyExpenseTracker/venv
+/dist
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
