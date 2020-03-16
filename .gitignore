@@ -1,8 +1,8 @@
 .DS_Store
 expense-tracker-frontend/node_modules
 expense-tracker-frontend/.idea
-RestMyExpenseTracker/.idea
-RestMyExpenseTracker/venv
+expense-tracker-rest/.idea
+expense-tracker-rest/venv
 /dist
 
 # local env files
