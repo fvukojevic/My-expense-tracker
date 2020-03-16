@@ -17,8 +17,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sensors
+      MYSQL_DATABASE: expense_tracker
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
+    volumes:
+      - ./RestMyExpenseTracker/seeder:/docker-entrypoint-initdb.d
     ports:
-      - 3306:3306
+      - "3306:3306"
