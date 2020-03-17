@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 16, 2020 at 02:44 PM
+-- Generation Time: Mar 17, 2020 at 01:35 PM
 -- Server version: 5.7.25
 -- PHP Version: 7.3.1
 
@@ -24,6 +24,15 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`) VALUES
+(1, 'Food'),
+(2, 'Clothes'),
+(3, 'Work');
 
 -- --------------------------------------------------------
 
@@ -51,6 +60,13 @@ CREATE TABLE `user` (
   `name` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `su`, `name`, `email`) VALUES
+(1, '109763202981457021043', 'Ferdo Vukojević', 'vukojevicf@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -84,7 +100,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `expense`
@@ -96,7 +112,7 @@ ALTER TABLE `expense`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
