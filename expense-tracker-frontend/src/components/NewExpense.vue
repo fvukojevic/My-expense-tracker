@@ -54,11 +54,14 @@
         props: {
           mode: String,
         },
+        created: function() {
+            this.fetchCategories();
+        },
         data() {
             return {
                 expense: null,
                 selectedCategory: 'Other',
-                categories: ['Food', 'Clothes', 'Work'],
+                categories: [],
                 newCategory: null,
             }
         },
@@ -71,6 +74,32 @@
                 this.$emit('changeMode', ['app-my-expenses'])
             },
             onSubmit() {
+            },
+            fetchCategories() {
+                const categoriesUri = 'http://127.0.0.1:5000/categories';
+                this.$http.get(categoriesUri)
+                    .then((response) => {
+                        const data = response.data;
+                        data.forEach((item) => {
+                            this.categories.push(item.name)
+                        });
+                    }).then(() => {
+                    const customCategoriesUri = 'http://127.0.0.1:5000/user/categories/' + this.user.SU;
+                    // eslint-disable-next-line no-console
+                    console.log(customCategoriesUri)
+                    this.$http.get(customCategoriesUri)
+                        .then((response) => {
+                            const data = response.data;
+                            data.forEach((item) => {
+                                this.categories.push(item.name)
+                            });
+                        });
+                });
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.getters.getUser;
             }
         },
         validations: {
