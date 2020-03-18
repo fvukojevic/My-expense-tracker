@@ -3,6 +3,7 @@ from database import database
 from models.user import User
 from models.category import Category
 from models.expense import Expense
+from models.user_category import UserCategory
 
 app = Flask(__name__)
 db = database.Database()
@@ -73,6 +74,30 @@ def category(identifier):
 def store_category():
     def db_query():
         return Category(db).store_category(request.json)
+
+    res = db_query()
+    return jsonify(res)
+
+
+@app.route('/user/categories/<identifier>')
+def user_categories(identifier):
+    def db_query():
+        user = User(db).get_user_by_su(identifier)
+        user_id = user[0]['id']
+        return UserCategory(db).get_user_categories(user_id)
+
+    res = db_query()
+    return jsonify(res)
+
+
+@app.route('/user/categories/<identifier>', methods=['POST'])
+def store_user_category(identifier):
+    def db_query():
+        user = User(db).get_user_by_su(identifier)
+        user_id = user[0]['id']
+        data = request.json
+        data['user_id'] = user_id
+        return UserCategory(db).store_user_category(data)
 
     res = db_query()
     return jsonify(res)
