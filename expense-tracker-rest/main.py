@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from database import database
 from models.user import User
 from models.category import Category
+from models.expense import Expense
 
 app = Flask(__name__)
 db = database.Database()
@@ -72,6 +73,15 @@ def category(identifier):
 def store_category():
     def db_query():
         return Category(db).store_category(request.json)
+
+    res = db_query()
+    return jsonify(res)
+
+
+@app.route('/expenses/<identifier>', methods=['GET'])
+def expenses(identifier):
+    def db_query():
+        return Expense(db).get_user_expenses(identifier)
 
     res = db_query()
     return jsonify(res)

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 17, 2020 at 01:35 PM
+-- Generation Time: Mar 18, 2020 at 09:47 AM
 -- Server version: 5.7.25
 -- PHP Version: 7.3.1
 
@@ -47,6 +47,17 @@ CREATE TABLE `expense` (
   `fk_category` int(11) NOT NULL,
   `fk_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `expense`
+--
+
+INSERT INTO `expense` (`id`, `amount`, `created_at`, `fk_category`, `fk_user`) VALUES
+(1, 500, '2020-03-18', 1, 1),
+(2, 1000, '2020-03-18', 1, 1),
+(3, 33, '2020-03-11', 2, 1),
+(4, 50, '2020-03-12', 3, 1),
+(5, 355, '2020-03-13', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -106,7 +117,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `expense`
 --
 ALTER TABLE `expense`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
