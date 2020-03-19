@@ -13,6 +13,7 @@ class UserCategory:
     # Stores a category in database
     def store_user_category(self, data):
         try:
+            # IF category already exists for this customer, do nothing
             self.db.cur.execute(f"SELECT * FROM {self.table_name} WHERE fk_user = {data['user_id']} AND name = ('{data['name']}')")
             category = self.db.cur.fetchall()
             if not category:

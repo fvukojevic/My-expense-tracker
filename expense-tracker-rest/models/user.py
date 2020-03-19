@@ -27,6 +27,7 @@ class User:
     # Stores a user in database
     def store_user(self, data):
         try:
+            # IF user already exists in the system, do nothing
             self.db.cur.execute(f"SELECT * FROM {self.table_name} WHERE su = ('{data['SU']}')")
             user = self.db.cur.fetchall()
             if not user:

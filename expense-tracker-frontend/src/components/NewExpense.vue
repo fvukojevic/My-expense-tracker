@@ -55,9 +55,6 @@
         props: {
           mode: String,
         },
-        created: function() {
-            this.$store.dispatch('initCategories', this.user.SU);
-        },
         data() {
             return {
                 expense: null,
