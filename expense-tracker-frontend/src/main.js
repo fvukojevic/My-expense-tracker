@@ -8,7 +8,7 @@ import axios from 'axios';
 Vue.use(GSignInButton);
 Vue.use(Vuelidate);
 
-Vue.prototype.$http = axios
+axios.defaults.baseURL = 'http://127.0.0.1:5000';
 
 Vue.config.productionTip = false;
 

@@ -27,10 +27,15 @@ class User:
     # Stores a user in database
     def store_user(self, data):
         try:
-            sql = f"INSERT INTO `{self.table_name}` (`su`, `name`, `email`) VALUES ('{data['SU']}', '{data['Ad']}', '{data['email']}')"
-            self.db.cur.execute(sql)
-            self.db.con.commit()
-            return {'statusCode': 200, 'msg': 'User stored successfully'}
+            self.db.cur.execute(f"SELECT * FROM {self.table_name} WHERE su = ('{data['SU']}')")
+            user = self.db.cur.fetchall()
+            if not user:
+                sql = f"INSERT INTO `{self.table_name}` (`su`, `name`, `email`) VALUES ('{data['SU']}', '{data['Ad']}', '{data['email']}')"
+                self.db.cur.execute(sql)
+                self.db.con.commit()
+                return {'statusCode': 200, 'msg': 'User stored successfully'}
+            else:
+                return {'statusCode': 500, 'msg': 'User already exists'}
         except KeyError as e:
             return {'statusCode': 500, 'msg': f'Got KeyError - reason {str(e)}'}
         except:

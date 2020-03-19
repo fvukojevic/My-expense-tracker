@@ -43,6 +43,7 @@
 
 <script>
     import {required} from "vuelidate/lib/validators";
+    import axios from 'axios';
 
     const validFloat = (expense) => {
         const castExpense = parseFloat(expense);
@@ -55,51 +56,35 @@
           mode: String,
         },
         created: function() {
-            this.fetchCategories();
+            this.$store.dispatch('initCategories', this.user.SU);
         },
         data() {
             return {
                 expense: null,
                 selectedCategory: 'Other',
-                categories: [],
                 newCategory: null,
             }
         },
         methods: {
             addCategory() {
-                this.categories.push(this.newCategory);
-                this.newCategory = null;
+                const categoryData = {
+                    SU: this.user.SU,
+                    name: this.newCategory
+                };
+                this.$store.dispatch('addCategory', categoryData);
             },
             changeMode() {
                 this.$emit('changeMode', ['app-my-expenses'])
             },
             onSubmit() {
-            },
-            fetchCategories() {
-                const categoriesUri = 'http://127.0.0.1:5000/categories';
-                this.$http.get(categoriesUri)
-                    .then((response) => {
-                        const data = response.data;
-                        data.forEach((item) => {
-                            this.categories.push(item.name)
-                        });
-                    }).then(() => {
-                    const customCategoriesUri = 'http://127.0.0.1:5000/user/categories/' + this.user.SU;
-                    // eslint-disable-next-line no-console
-                    console.log(customCategoriesUri)
-                    this.$http.get(customCategoriesUri)
-                        .then((response) => {
-                            const data = response.data;
-                            data.forEach((item) => {
-                                this.categories.push(item.name)
-                            });
-                        });
-                });
             }
         },
         computed: {
             user() {
                 return this.$store.getters.getUser;
+            },
+            categories() {
+                return this.$store.getters.getCategories;
             }
         },
         validations: {
