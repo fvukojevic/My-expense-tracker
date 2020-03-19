@@ -43,7 +43,6 @@
 
 <script>
     import {required} from "vuelidate/lib/validators";
-    import expense from "../store/modules/expense";
 
     const validFloat = (expense) => {
         const castExpense = parseFloat(expense);
