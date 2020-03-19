@@ -121,5 +121,14 @@ def expenses(identifier):
     return jsonify(res)
 
 
+@app.route('/expenses', methods=['POST'])
+def store_expense():
+    def db_query():
+        data = request.json
+        return Expense(db).store_expense(data)
+
+    res = db_query()
+    return jsonify(res)
+
 if __name__ == '__main__':
     app.run()

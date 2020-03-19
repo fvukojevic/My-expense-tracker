@@ -2,14 +2,14 @@
     <div id="signup">
         <div class="signup-form">
             <form @submit.prevent="onSubmit">
-                <div class="input" :class="{invalid: $v.expense.$error}">
-                    <label for="expense">Enter Expense</label>
+                <div class="input" :class="{invalid: $v.amount.$error}">
+                    <label for="expense">Enter new Amount</label>
                     <input
                             type="text"
                             id="expense"
-                            @blur="$v.expense.$touch()"
-                            v-model="expense">
-                    <small v-if="$v.expense.$error">Expense must be a positive number</small>
+                            @blur="$v.amount.$touch()"
+                            v-model="amount">
+                    <small v-if="$v.amount.$error">Amount must be a positive number</small>
                 </div>
                 <div class="input">
                     <label for="country">Categories</label>
@@ -43,7 +43,7 @@
 
 <script>
     import {required} from "vuelidate/lib/validators";
-    import axios from 'axios';
+    import expense from "../store/modules/expense";
 
     const validFloat = (expense) => {
         const castExpense = parseFloat(expense);
@@ -57,7 +57,7 @@
         },
         data() {
             return {
-                expense: null,
+                amount: null,
                 selectedCategory: 'Other',
                 newCategory: null,
             }
@@ -74,6 +74,12 @@
                 this.$emit('changeMode', ['app-my-expenses'])
             },
             onSubmit() {
+                const expenseData = {
+                    SU: this.user.SU,
+                    name: this.selectedCategory,
+                    amount: this.amount
+                };
+                this.$store.dispatch('storeExpense', expenseData)
             }
         },
         computed: {
@@ -85,7 +91,7 @@
             }
         },
         validations: {
-            expense: {
+            amount: {
                 required,
                 validFloat
             }

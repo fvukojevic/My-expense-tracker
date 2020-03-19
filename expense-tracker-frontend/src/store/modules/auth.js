@@ -47,7 +47,6 @@ const actions = {
             dispatch('logout')
         }, expirationTime)
     },
-    // eslint-disable-next-line no-empty-pattern
     storeUserOnTheServer({ dispatch }, userData) {
         const userServerData = {
             SU: userData.SU,

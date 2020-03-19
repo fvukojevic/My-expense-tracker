@@ -1,3 +1,8 @@
+from .user import User
+from .category import Category
+from .user_category import UserCategory
+import time
+
 class Expense:
     def __init__(self, db):
         self.db = db
@@ -30,4 +35,22 @@ class Expense:
 
     # Stores an expense in database
     def store_expense(self, data):
-        pass
+        user = User(self.db).get_user_by_su(data['SU'])[0]
+        user_id = user['id']
+        category = Category(self.db).get_category_by_name(data['name'])
+        user_category = UserCategory(self.db).get_user_category_by_name(data['name'])
+        created_at = time.strftime('%Y-%m-%d')
+        if category:
+            sql = f"INSERT INTO `{self.table_name}` (`amount`, `created_at`, `fk_category`, `fk_user`)" \
+                  f" VALUES ('{data['amount']}', '{created_at}', {category[0]['id']} ,{user_id})"
+            self.db.cur.execute(sql)
+            self.db.con.commit()
+            return {'statusCode': 200, 'msg': 'Expense stored successfully'}
+        elif user_category:
+            sql = f"INSERT INTO `{self.table_name}` (`amount`, `created_at`, `fk_user_category`, `fk_user`)" \
+                  f" VALUES ('{data['amount']}', '{created_at}', {user_category[0]['id']} ,{user_id})"
+            self.db.cur.execute(sql)
+            self.db.con.commit()
+            return {'statusCode': 200, 'msg': 'Expense stored successfully'}
+        else:
+            return {'statusCode': 500, 'msg': 'Something went wrong'}

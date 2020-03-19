@@ -10,6 +10,13 @@ class UserCategory:
 
         return categories
 
+    # Returns a single user category by name
+    def get_user_category_by_name(self, category_name):
+        self.db.cur.execute(f"SELECT * FROM {self.table_name} WHERE name = '{category_name}'")
+        category = self.db.cur.fetchall()
+
+        return category
+
     # Stores a category in database
     def store_user_category(self, data):
         try:
