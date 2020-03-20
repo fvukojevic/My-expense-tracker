@@ -116,6 +116,15 @@ def store_user_category(identifier):
 @app.route('/expenses/<identifier>', methods=['GET'])
 def expenses(identifier):
     def db_query():
+        return Expense(db).get_user_expenses(identifier)
+
+    res = db_query()
+    return jsonify(res)
+
+
+@app.route('/expenses/<identifier>', methods=['POST'])
+def expenses_from_to(identifier):
+    def db_query():
         data = request.json
         if data is None:
             return Expense(db).get_user_expenses(identifier)

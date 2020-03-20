@@ -12,6 +12,7 @@
     "core-js": "^3.6.4",
     "node": "^13.10.1",
     "vue": "^2.6.11",
+    "vue-date": "^1.2.0",
     "vue-google-login": "^2.0.3",
     "vue-google-signin-button": "^1.0.4",
     "vuelidate": "^0.7.5",

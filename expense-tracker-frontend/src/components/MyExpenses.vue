@@ -2,17 +2,32 @@
     <div id="signup">
         <div class="signup-form">
             <ul class="list-group">
-                <li class="list-group-item" v-for="expense in userExpenses" :key="expense.id">{{expense.category_name}}: {{expense.amount}}</li>
-                <li class="list-group-item">Total: {{total}}</li>
+                <li class="list-group-item" v-for="expense in userExpenses" :key="expense.id">{{expense.category_name}}: {{expense.amount}} €</li>
+                <hr>
+                <li class="list-group-item"><b>Total</b>: {{total}} €</li>
             </ul>
+            <br><br>
+            <datepicker v-model="range" range></datepicker>
+            <br>
+            <button class="button" type="button" @click="applyFilters"> Apply filters </button>
         </div>
     </div>
 </template>
 
 <script>
+    import datepicker from 'vue-date'
+
     export default {
         beforeCreate() {
             this.$store.dispatch('fetchUserExpenses')
+        },
+        created() {
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd;
+            this.range = ['2020-01-01', today]
         },
         computed: {
             userExpenses() {
@@ -27,8 +42,19 @@
                     return total;
                 }
                 return total
+            },
+        },
+        data() {
+            return {
+                range: null
             }
         },
+        methods: {
+            applyFilters() {
+                this.$store.dispatch('fetchUserExpensesFromTo', this.range);
+            }
+        },
+        components: { datepicker }
     }
 </script>
 
@@ -78,8 +104,9 @@
         font: inherit;
     }
 
-    .categories button {
+    .button {
         border: 1px solid #521751;
+        width:80%;
         background: #521751;
         color: white;
         padding: 6px;
@@ -87,8 +114,8 @@
         cursor: pointer;
     }
 
-    .categories button:hover,
-    .categories button:active {
+    .button:hover,
+    .button:active {
         background-color: #8d4288;
     }
 

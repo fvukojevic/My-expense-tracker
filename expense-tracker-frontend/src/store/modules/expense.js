@@ -14,14 +14,23 @@ const actions = {
     // eslint-disable-next-line no-empty-pattern
     storeExpense({}, expenseData) {
         axios.post('/expenses', expenseData)
-            .then((response) => {
-                // eslint-disable-next-line no-console
-                console.log(response);
+            .then(() => {
             })
     },
     fetchUserExpenses({getters, commit}) {
         const token = getters.getToken;
         axios.get('/expenses/' + token)
+            .then((response) => {
+                commit('setUserExpenses', response.data);
+            })
+    },
+    fetchUserExpensesFromTo({getters, commit}, range) {
+        const data = {
+            'start_date': range[0],
+            'end_date': range[1],
+        };
+        const token = getters.getToken;
+        axios.post('/expenses/' + token, data)
             .then((response) => {
                 commit('setUserExpenses', response.data);
             })
