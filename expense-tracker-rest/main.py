@@ -1,3 +1,4 @@
+import time
 from flask import Flask, jsonify, request
 from database import database
 from models.user import User
@@ -115,7 +116,15 @@ def store_user_category(identifier):
 @app.route('/expenses/<identifier>', methods=['GET'])
 def expenses(identifier):
     def db_query():
-        return Expense(db).get_user_expenses(identifier)
+        data = request.json
+        if data is None:
+            return Expense(db).get_user_expenses(identifier)
+        else:
+            if 'start_date' not in data:
+                data['start_date'] = '2000-01-01'
+            if 'end_date' not in data:
+                data['end_date'] = time.strftime('%Y-%m-%d')
+            return Expense(db).get_user_expenses_from_to(data, identifier)
 
     res = db_query()
     return jsonify(res)
