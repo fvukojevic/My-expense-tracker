@@ -3,7 +3,7 @@ expense-tracker-frontend/node_modules
 expense-tracker-frontend/.idea
 expense-tracker-rest/.idea
 expense-tracker-rest/venv
-/dist
+expense-tracker-frontend/dist
 
 # local env files
 .env.local
