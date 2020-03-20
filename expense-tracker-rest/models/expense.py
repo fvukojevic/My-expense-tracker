@@ -28,7 +28,10 @@ class Expense:
         self.db.cur.execute(category_sql)
         user_expenses = self.db.cur.fetchall()
         self.db.cur.execute(user_category_sql)
-        user_expenses.extend(self.db.cur.fetchall())
+        if type(user_expenses) is tuple:
+            user_expenses = self.db.cur.fetchall()
+        else:
+            user_expenses.extend(self.db.cur.fetchall())
         return user_expenses
 
     # Returns expenses from - to date
@@ -50,7 +53,10 @@ class Expense:
         self.db.cur.execute(category_sql)
         user_expenses = self.db.cur.fetchall()
         self.db.cur.execute(user_category_sql)
-        user_expenses.extend(self.db.cur.fetchall())
+        if type(user_expenses) is tuple:
+            user_expenses = self.db.cur.fetchall()
+        else:
+            user_expenses.extend(self.db.cur.fetchall())
         return user_expenses
 
     # Stores an expense in database
