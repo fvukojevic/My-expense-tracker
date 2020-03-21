@@ -148,5 +148,14 @@ def store_expense():
     res = db_query()
     return jsonify(res)
 
+
+@app.route('/download/<identifier>', methods=['GET'])
+def download(identifier):
+    def func():
+        return Expense(db).download_expenses(identifier)
+    res = func()
+    return res
+
+
 if __name__ == '__main__':
     app.run()
