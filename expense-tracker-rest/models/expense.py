@@ -1,4 +1,3 @@
-import urllib.request
 from .user import User
 from .category import Category
 from .user_category import UserCategory
