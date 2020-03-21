@@ -167,6 +167,14 @@ def create_hash_list_for_excel(user_expenses):
                         hash_expenses[category][index] = expense['amount']
                 except IndexError:
                     hash_expenses[category].append(expense['amount'])
+            elif expense['.category_name'] == category:
+                try:
+                    if hash_expenses[category][index] is not None:
+                        hash_expenses[category][index] += expense['amount']
+                    else:
+                        hash_expenses[category][index] = expense['amount']
+                except IndexError:
+                    hash_expenses[category].append(expense['amount'])
             else:
                 try:
                     if hash_expenses[category][index] is not None:
@@ -184,5 +192,5 @@ def create_hash_list_for_excel(user_expenses):
         if key != 'Total':
             hash_expenses[key].append(None)
     hash_expenses['Total'].append(sum(hash_expenses['Total']))
-
+    print(hash_expenses)
     return hash_expenses
