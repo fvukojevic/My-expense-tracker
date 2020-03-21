@@ -11,6 +11,7 @@
             <br>
             <button class="button" type="button" @click="applyFilters"> Apply filters </button>
             <br><br>
+            <button class="button" type="button" style="width:30%; margin-right:2em" @click="changeMode"> &#8592; Back </button>
             <a href="#" @click="download">Download Excel file</a>
         </div>
     </div>
@@ -55,9 +56,15 @@
             applyFilters() {
                 this.$store.dispatch('fetchUserExpensesFromTo', this.range);
             },
+            changeMode() {
+                this.$emit('changeMode', ['app-new-expense'])
+            },
             download() {
                 this.$store.dispatch('download', this.$store.getters.getToken)
             }
+        },
+        beforeDestroy() {
+            this.changeMode()
         },
         components: { datepicker }
     }
