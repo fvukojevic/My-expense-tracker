@@ -34,6 +34,13 @@ const actions = {
             .then((response) => {
                 commit('setUserExpenses', response.data);
             })
+    },
+    // eslint-disable-next-line no-empty-pattern
+    download({}, token) {
+        axios.get('/download/' + token).then((res) => {
+            // eslint-disable-next-line no-console
+            console.log(res)
+        })
     }
 };
 

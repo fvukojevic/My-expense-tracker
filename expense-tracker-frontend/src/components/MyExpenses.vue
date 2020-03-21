@@ -10,6 +10,8 @@
             <datepicker v-model="range" range></datepicker>
             <br>
             <button class="button" type="button" @click="applyFilters"> Apply filters </button>
+            <br><br>
+            <a href="#" @click="download">Download Excel file</a>
         </div>
     </div>
 </template>
@@ -52,6 +54,9 @@
         methods: {
             applyFilters() {
                 this.$store.dispatch('fetchUserExpensesFromTo', this.range);
+            },
+            download() {
+                this.$store.dispatch('download', this.$store.getters.getToken)
             }
         },
         components: { datepicker }
