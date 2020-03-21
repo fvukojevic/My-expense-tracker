@@ -111,7 +111,7 @@ class Expense:
         df = pd.DataFrame(hash_expense)
 
         # Create a Pandas Excel writer using XlsxWriter as the engine.
-        writer = pd.ExcelWriter(str(os.path.join(Path.home(), 'Downloads/demo.xlsx')), engine='xlsxwriter')
+        writer = pd.ExcelWriter(str(os.path.join(Path.home(), 'Downloads/expense.xlsx')), engine='xlsxwriter')
 
         # Convert the dataframe to an XlsxWriter Excel object.
         df.to_excel(writer, sheet_name='Expenses', index=False)
