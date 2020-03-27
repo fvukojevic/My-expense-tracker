@@ -6,6 +6,7 @@ from models.category import Category
 from models.expense import Expense
 from models.user_category import UserCategory
 
+time.sleep(60)
 app = Flask(__name__)
 db = database.Database()
 
@@ -158,4 +159,4 @@ def download(identifier):
 
 
 if __name__ == '__main__':
-    app.run(host ='0.0.0.0', port = 5000, debug = True)
+    app.run(debug=True, host='0.0.0.0')

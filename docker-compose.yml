@@ -24,3 +24,19 @@ services:
       - ./expense-tracker-rest/seeder:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+
+  backend:
+    container_name: expense_tracker_rest
+    build: ./expense-tracker-rest
+    environment:
+      MYSQL_DB: expense_tracker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      PYTHON_PORT: 5000
+    working_dir: /app
+    ports:
+      - 5000:5000
+    links:
+      - db
+    depends_on:
+      - db
