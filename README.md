@@ -25,7 +25,6 @@ Good package and documentation on the last point: https://www.npmjs.com/package/
 
 In Docker Preferences/FileSharing put the directory you copied the project into as path. Once that is done inisde the terminal get inside the folder. Running `make clean && make setup` will start your application. Other make command you can easily see inside the Makefile, and exactly what they do.
 
-Python part is still not dockerized, will probably get around it next week. As of now, once the frontend and mysql db are running on docker, just get inside main.py file and run it. Should get things started for you
 
 ## Authors
 
