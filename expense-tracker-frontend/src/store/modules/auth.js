@@ -7,7 +7,7 @@ const state = {
 
 const mutations = {
     authUser: (state, userData) => {
-        state.token = userData.SU;
+        state.token = userData.MU;
     },
     storeUser: (state, userData) => {
         state.user = userData;
@@ -22,7 +22,7 @@ const actions = {
     login({commit, dispatch}, userData) {
         commit('authUser', userData);
         commit('storeUser', userData);
-        localStorage.setItem('token', userData.SU);
+        localStorage.setItem('token', userData.MU);
         localStorage.setItem('userData', JSON.stringify(userData));
         dispatch('storeUserOnTheServer', userData);
         dispatch('setLogoutTimer', 300000) // 5 minutes timer
@@ -38,7 +38,7 @@ const actions = {
             return;
         }
         const userData = localStorage.getItem('userData');
-        commit('authUser',  { SU: token, });
+        commit('authUser',  { MU: token, });
         commit('storeUser', JSON.parse(userData));
         dispatch('initCategories', token)
     },
@@ -49,13 +49,13 @@ const actions = {
     },
     storeUserOnTheServer({ dispatch }, userData) {
         const userServerData = {
-            SU: userData.SU,
+            SU: userData.MU,
             Ad: userData.Ad,
             email: userData.zu
         };
         axios.post('/users', userServerData)
             .then(() => {
-                dispatch('initCategories', userServerData.SU);
+                dispatch('initCategories', userServerData.MU);
             })
     }
 };

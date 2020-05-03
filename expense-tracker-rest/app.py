@@ -8,8 +8,6 @@ from models.user_category import UserCategory
 
 time.sleep(60)
 app = Flask(__name__)
-db = database.Database()
-
 
 @app.after_request
 def add_header(response):
@@ -22,15 +20,18 @@ def add_header(response):
 
 @app.route('/users', methods=['GET'])
 def users():
+    db = database.Database()
     def db_query():
         return User(db).get_users()
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/users/<identifier>', methods=['GET'])
 def user(identifier):
+    db = database.Database()
     user_id = None
     user_su = None
     if int(identifier) > 10000:
@@ -43,29 +44,35 @@ def user(identifier):
             else User(db).get_user_by_su(user_su)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/users', methods=['POST'])
 def store_user():
+    db = database.Database()
     def db_query():
         return User(db).store_user(request.json)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/categories', methods=['GET'])
 def categories():
+    db = database.Database()
     def db_query():
         return Category(db).get_categories()
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/categories/<identifier>', methods=['GET'])
 def category(identifier):
+    db = database.Database()
     category_id = None
     category_name = None
     try:
@@ -78,31 +85,37 @@ def category(identifier):
             else Category(db).get_category_by_name(category_name)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/categories', methods=['POST'])
 def store_category():
+    db = database.Database()
     def db_query():
         return Category(db).store_category(request.json)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/user/categories/<identifier>')
 def user_categories(identifier):
+    db = database.Database()
     def db_query():
         user = User(db).get_user_by_su(identifier)
         user_id = user[0]['id']
         return UserCategory(db).get_user_categories(user_id)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/user/categories/<identifier>', methods=['POST'])
 def store_user_category(identifier):
+    db = database.Database()
     def db_query():
         user = User(db).get_user_by_su(identifier)
         user_id = user[0]['id']
@@ -111,20 +124,24 @@ def store_user_category(identifier):
         return UserCategory(db).store_user_category(data)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/expenses/<identifier>', methods=['GET'])
 def expenses(identifier):
+    db = database.Database()
     def db_query():
         return Expense(db).get_user_expenses(identifier)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/expenses/<identifier>', methods=['POST'])
 def expenses_from_to(identifier):
+    db = database.Database()
     def db_query():
         data = request.json
         if data is None:
@@ -137,24 +154,29 @@ def expenses_from_to(identifier):
             return Expense(db).get_user_expenses_from_to(data, identifier)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/expenses', methods=['POST'])
 def store_expense():
+    db = database.Database()
     def db_query():
         data = request.json
         return Expense(db).store_expense(data)
 
     res = db_query()
+    db.con.close()
     return jsonify(res)
 
 
 @app.route('/download/<identifier>', methods=['GET'])
 def download(identifier):
+    db = database.Database()
     def func():
         return Expense(db).download_expenses(identifier)
     res = func()
+    db.con.close()
     return res
 
 
